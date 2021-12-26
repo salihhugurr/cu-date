@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {View, Text, TouchableOpacity, FlatList, Image, StyleSheet} from "react-native";
 import tw from "tailwind-rn";
 import {useNavigation} from "@react-navigation/core";
-import {collection, onSnapshot, query, where} from "@firebase/firestore";
+import {collection, onSnapshot, orderBy, query, where} from "@firebase/firestore";
 import {db} from "../firebase";
 import useAuth from "../hooks/useAuth";
 import getMatchedUserInfo from "../lib/getMatchedUserInfo";
@@ -11,10 +11,12 @@ const ChatRow = ({matchDetails}) => {
     const navigation = useNavigation();
     const {user} = useAuth();
     const [matchedUserInfo,setMatchedUserInfo] = useState(null)
+    const [lastMessage,setLastMessage] = useState("")
 
     useEffect(()=>{
         setMatchedUserInfo(getMatchedUserInfo(matchDetails.users,user.uid))
     },[matchDetails,user])
+    useEffect(()=>onSnapshot(query(collection(db,"matches",matchDetails.id,"messages"),orderBy('timestamp','desc')),(snapshot) => setLastMessage(snapshot.docs[0]._document.data.value.mapValue.fields.message.stringValue)),[matchDetails,db])
     return (
         <TouchableOpacity
             onPress={()=>navigation.navigate("Message",{
@@ -29,7 +31,7 @@ const ChatRow = ({matchDetails}) => {
                 <Text style={tw("text-lg font-semibold")}>
                     {matchedUserInfo?.displayName}
                 </Text>
-                <Text>Say Hi!</Text>
+                <Text>{lastMessage||"Say Hi!"}</Text>
             </View>
         </TouchableOpacity>
     )
