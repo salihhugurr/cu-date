@@ -16,7 +16,10 @@ const ChatRow = ({matchDetails}) => {
     useEffect(()=>{
         setMatchedUserInfo(getMatchedUserInfo(matchDetails.users,user.uid))
     },[matchDetails,user])
-    useEffect(()=>onSnapshot(query(collection(db,"matches",matchDetails.id,"messages"),orderBy('timestamp','desc')),(snapshot) => setLastMessage(snapshot.docs[0]._document.data.value.mapValue.fields.message.stringValue)),[matchDetails,db])
+    useEffect(()=>onSnapshot(query(collection(db,"matches",matchDetails.id,"messages"),orderBy('timestamp','desc')),(snapshot) => {
+        console.log(snapshot);
+        setLastMessage(snapshot.docs.length>0 ? snapshot.docs[0]._document.data.value.mapValue.fields.message.stringValue : undefined)
+    }),[matchDetails,db])
     return (
         <TouchableOpacity
             onPress={()=>navigation.navigate("Message",{

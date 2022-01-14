@@ -36,9 +36,9 @@ const ModalScreen = () => {
   return (
     <View style={tw("flex-1 items-center pt-1")}>
       <Image
-        style={tw("h-20 w-full")}
-        resizeMode="contain"
-        source={{ uri: "https://links.papareact.com/2pf" }}
+        style={tw("h-20 w-20 rounded-full")}
+        resizeMode="cover"
+        source={require('../assets/logo2.jpeg')}
       />
       <Text style={tw("text-xl text-gray-500 font-bold p-2")}>
         Welcome {user.displayName}

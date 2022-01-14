@@ -35,6 +35,7 @@ export const HomeScreen = () => {
     );
 
     useEffect(() => {
+        console.log("userphoto",user)
         let unsub;
 
         const fetchCards = async () => {
@@ -113,12 +114,12 @@ export const HomeScreen = () => {
                 <TouchableOpacity onPress={() => navigation.navigate("Modal")}>
                     <Image
                         style={tw("h-14 w-14 rounded-full")}
-                        source={require("../assets/logo.jpeg")}
+                        source={require("../assets/logo2.jpeg")}
                     />
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => navigation.navigate("Chat")}>
-                    <Ionicons name="chatbubbles-sharp" size={30} color="#FF5864"/>
+                    <Ionicons name="chatbubbles-sharp" size={30} color="#3e0034"/>
                 </TouchableOpacity>
             </View>
 

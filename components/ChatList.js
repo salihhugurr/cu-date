@@ -6,6 +6,7 @@ import {collection, onSnapshot, query, where} from "@firebase/firestore";
 import {db} from "../firebase";
 import useAuth from "../hooks/useAuth";
 import ChatRow from "./ChatRow";
+import firebase from "firebase/compat";
 
 const ChatList = () => {
     const {user} = useAuth()

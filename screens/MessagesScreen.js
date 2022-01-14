@@ -18,8 +18,9 @@ import {useRoute} from "@react-navigation/native";
 import tw from "tailwind-rn";
 import SenderMessage from "../components/SenderMessage";
 import ReceiverMessage from "../components/ReceiverMessage";
-import {collection, addDoc, serverTimestamp, orderBy, onSnapshot, query} from "@firebase/firestore";
+import {collection, addDoc, serverTimestamp, orderBy, onSnapshot, query,doc,setDoc} from "@firebase/firestore";
 import {db} from "../firebase";
+import firebase from "firebase/compat";
 
 export const MessagesScreen = () => {
     const [input, setInput] = useState("");
@@ -28,12 +29,14 @@ export const MessagesScreen = () => {
     const {params} = useRoute();
     const {matchDetails} = params;
 
-    useEffect(() => onSnapshot(query(collection(db, 'matches', matchDetails.id, 'messages'), orderBy('timestamp', 'desc')),
-        snapshot => setMessages(snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }))))
-        [matchDetails, db])
+    useEffect(() => {
+        return onSnapshot(query(collection(db, 'matches', matchDetails.id, 'messages'), orderBy('timestamp', 'desc')),
+            snapshot => setMessages(snapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            }))))
+    },
+        [matchDetails])
 
     const sendMessage = () => {
         console.log("messages", messages)
@@ -44,7 +47,6 @@ export const MessagesScreen = () => {
             photoURL: matchDetails.users[user.uid].photoURL,
             message: input
         });
-
         setInput("");
     }
     return (
@@ -76,7 +78,7 @@ export const MessagesScreen = () => {
                         onSubmitEditing={sendMessage}
                         value={input}
                     />
-                    <Button onPress={() => sendMessage} title="Send" color="#FF5864"/>
+                    <Button onPress={sendMessage} title="Send" color="#FF5864"/>
                 </View>
             </KeyboardAvoidingView>
 
