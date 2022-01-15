@@ -12,9 +12,9 @@ const LoginScreen = () => {
             <ImageBackground
                 style={[tw("flex-1"), {opacity: .5}]}
                 resizeMode="cover"
-                source={{uri: "https://i.pinimg.com/474x/90/dc/b2/90dcb25a10fbfdcbc89edf27e5711b5e--silly-couple-pictures-love-couple.jpg"}}
+                source={{uri: "https://hips.hearstapps.com/ell.h-cdn.co/assets/cm/14/52/549ba8e764c82_-_elle-relationship-couple-tips-xln-xln.jpg"}}
             >
-                <View style={{position:"absolute",top:"55%",alignSelf:"center"}}>
+                <View style={{position:"absolute",top:"22%",alignSelf:"center"}}>
                     <Image
                         style={tw("h-32 w-32 rounded-full")}
                         source={require("../assets/logo2.jpeg")}
